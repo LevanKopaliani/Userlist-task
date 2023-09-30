@@ -28,8 +28,8 @@ const UserContextProvider = ({ children }) => {
         const updatedUsers = users.map((user) => {
           if (user.id == action.data.id) {
             user.name = action.data.name;
-            user.city = action.data.city;
-            user.address = action.data.address;
+            user.email = action.data.email;
+            user.address.city = action.data.city;
           }
           return user;
         });
