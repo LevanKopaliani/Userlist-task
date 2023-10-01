@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import { userActionDispatch } from "../context/UserContext";
 
 // UI
@@ -24,11 +24,12 @@ const UserListItem = ({ user, throwAlert }) => {
   return (
     <TableRow>
       <TableCell className="font-medium">
-        <Link href={`/user/${user.id}`}>{user.name}</Link>
+        {/* <Link href={`/user/${user.id}`}>{user.name}</Link> */}
+        <Link href={{ pathname: `/user/${user.id}` }}>{user.name}</Link>
       </TableCell>
       <TableCell>{user.email}</TableCell>
       <TableCell>{user.address?.city}</TableCell>
-      <TableCell className="text-right flex gap-2 justify-end">
+      <TableCell className="flex gap-2 justify-start">
         <EditUser user={user} onEdit={handleEdit} />
         <DeleteUser onDelete={handleDelete} />
       </TableCell>

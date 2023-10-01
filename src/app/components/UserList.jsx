@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import { userContext } from "../context/UserContext";
 import UserListItem from "./UserListItem";
 
@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Loading from "../loading";
 //
 const UserList = () => {
   const [alert, setAlert] = useState(null);
@@ -45,9 +46,10 @@ const UserList = () => {
             <TableHead className="w-[200px]">Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>City</TableHead>
-            <TableHead className="text-right w-[200px]">Actions</TableHead>
+            <TableHead className="w-[200px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
           {userList.map((user) => (
             <UserListItem key={user.id} user={user} throwAlert={throwAlert} />

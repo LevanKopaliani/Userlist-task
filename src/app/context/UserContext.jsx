@@ -48,8 +48,6 @@ const UserContextProvider = ({ children }) => {
     const { data } = await axios.get(
       `https://jsonplaceholder.typicode.com/users`
     );
-    // console.log(data);
-    // setUsers(data); 1
     dispatch({ type: "getData", data });
   };
 
@@ -61,10 +59,5 @@ const UserContextProvider = ({ children }) => {
     </userContext.Provider>
   );
 };
-
-/// can be deleted
-export function useUserList() {
-  return useContext(userContext);
-}
 
 export default UserContextProvider;

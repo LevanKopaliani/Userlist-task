@@ -32,7 +32,7 @@ const EditUser = ({ user, onEdit }) => {
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
             <DialogDescription>
-              Make changes here. Click save when you're done.
+              Make changes here. Click save when you done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

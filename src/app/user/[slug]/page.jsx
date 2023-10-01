@@ -1,5 +1,4 @@
 "use client";
-
 import { userContext } from "@/app/context/UserContext";
 import { useParams, useRouter } from "next/navigation";
 
@@ -10,11 +9,11 @@ const page = (props) => {
   const params = useParams();
   const userList = useContext(userContext);
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     const [currentUser] = userList.filter((user) => user.id == params.slug);
     setUser(currentUser);
   }, [userList]);
+
   return (
     <main
       className="
@@ -23,9 +22,9 @@ const page = (props) => {
       flex-col
       items-center
       justify-between
-      p-10"
+      p-10 "
     >
-      Test
+      Test rame
       <p>name: {user?.name}</p>
       <button type="button" onClick={() => router.back()}>
         Click here to go back
