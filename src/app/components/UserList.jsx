@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Loading from "../loading";
+import { Button } from "@/components/ui/button";
+import { DataTable, DataTableDemo } from "./Table";
 //
 const UserList = () => {
   const [alert, setAlert] = useState(null);
@@ -27,8 +29,8 @@ const UserList = () => {
 
   const ViewAlert = (
     <Alert
-      className="absolute left-3 top-3  w-auto transition-all animate-pulse"
-      variant={alert == "DELETE" ? "destructive" : "default"}
+      className="absolute left-3 top-3  w-auto transition-all animate-pulse bg-red-500 text-white"
+      // variant={alert == "DELETE" ? "destructive" : "default"}
     >
       {/* <AlertTitle>Warning!</AlertTitle> */}
       <AlertDescription>
@@ -38,25 +40,50 @@ const UserList = () => {
   );
 
   return (
-    <div>
+    <>
       {alert && ViewAlert}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>City</TableHead>
-            <TableHead className="w-[200px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+      <DataTable throwAlert={throwAlert} data={userList} />
+    </>
 
-        <TableBody>
-          {userList.map((user) => (
-            <UserListItem key={user.id} user={user} throwAlert={throwAlert} />
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    // <div>
+    //   {alert && ViewAlert}
+    //   <Table>
+    //     <TableHeader>
+    //       <TableRow>
+    //         <TableHead className="w-[200px]">Name</TableHead>
+    //         <TableHead>Email</TableHead>
+    //         <TableHead>City</TableHead>
+    //         <TableHead className="w-[200px]">Actions</TableHead>
+    //       </TableRow>
+    //     </TableHeader>
+
+    //     <TableBody>
+    //       {userList.map((user) => (
+    //         <UserListItem key={user.id} user={user} throwAlert={throwAlert} />
+    //       ))}
+    //     </TableBody>
+    //   </Table>
+    //   <div className="flex items-center justify-end space-x-2 py-4">
+    //     <div className="space-x-2">
+    //       <Button
+    //         variant="outline"
+    //         size="sm"
+    //         // onClick={() => table.previousPage()}
+    //         // disabled={!table.getCanPreviousPage()}
+    //       >
+    //         Previous
+    //       </Button>
+    //       <Button
+    //         variant="outline"
+    //         size="sm"
+    //         // onClick={() => table.nextPage()}
+    //         // disabled={!table.getCanNextPage()}
+    //       >
+    //         Next
+    //       </Button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

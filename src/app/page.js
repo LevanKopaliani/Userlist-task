@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import UserList from "./components/UserList";
+import { DataTableDemo } from "./components/Table";
 
 export default function Home() {
   return (
