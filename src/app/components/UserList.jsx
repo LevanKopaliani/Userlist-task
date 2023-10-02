@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useContext, useState } from "react";
-import { userContext } from "../context/UserContext";
+import { userActionDispatch, userContext } from "../context/UserContext";
 import UserListItem from "./UserListItem";
 
 // UI
@@ -15,34 +15,50 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Loading from "../loading";
 import { Button } from "@/components/ui/button";
-import { DataTable, DataTableDemo } from "./Table";
+import { DataTable, DataTableDemo } from "./DataTable";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 //
 const UserList = () => {
-  const [alert, setAlert] = useState(null);
-
   const userList = useContext(userContext);
+  const dispatch = React.useContext(userActionDispatch);
 
-  function throwAlert(props) {
-    props == "DELETE" ? setAlert("DELETE") : setAlert("EDIT");
-    setTimeout(() => setAlert(null), 2000);
+  // Toast
+  const { toast } = useToast();
+  //
+
+  // DELETE & EDIT
+  function handleDelete(id) {
+    dispatch({ type: "DELETE", id: id });
+    throwAlert("DELETE");
   }
+  function handleEdit(name, email, city, id) {
+    dispatch({ type: "EDIT", data: { name, city, email, id } });
+    throwAlert("EDIT");
+  }
+  //
 
-  const ViewAlert = (
-    <Alert
-      className="absolute left-3 top-3  w-auto transition-all animate-pulse bg-red-500 text-white"
-      // variant={alert == "DELETE" ? "destructive" : "default"}
-    >
-      {/* <AlertTitle>Warning!</AlertTitle> */}
-      <AlertDescription>
-        {alert == "DELETE" ? "User Deleted." : "User Edited"}{" "}
-      </AlertDescription>
-    </Alert>
-  );
-
+  // Alert
+  function throwAlert(props) {
+    props == "DELETE"
+      ? toast({
+          variant: "destructive",
+          description: "User Deleted",
+        })
+      : toast({
+          description: "User Edited",
+        });
+  }
+  //
   return (
     <>
-      {alert && ViewAlert}
-      <DataTable throwAlert={throwAlert} data={userList} />
+      <Toaster />
+      <DataTable
+        throwAlert={throwAlert}
+        data={userList}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+      />
     </>
 
     // <div>

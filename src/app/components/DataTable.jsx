@@ -18,19 +18,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { userActionDispatch, userContext } from "../context/UserContext";
 import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
 import Link from "next/link";
 
-//////////////////// me
-
-//////
-
-export function DataTable({ data, throwAlert }) {
-  // DATA
-  //   const data = React.useContext(userContext);
-
+export function DataTable({ data, handleDelete, handleEdit }) {
   // columns
   const columns = [
     {
@@ -77,17 +69,15 @@ export function DataTable({ data, throwAlert }) {
   //
 
   ////////////////
-  const dispatch = React.useContext(userActionDispatch);
 
-  function handleDelete(rowId) {
-    dispatch({ type: "DELETE", id: rowId });
-
-    throwAlert("DELETE");
-  }
-  function handleEdit(name, email, city, id) {
-    dispatch({ type: "EDIT", data: { name, city, email, id } });
-    throwAlert("EDIT");
-  }
+  // function handleDelete(rowId) {
+  //   dispatch({ type: "DELETE", id: rowId });
+  //   throwAlert("DELETE");
+  // }
+  // function handleEdit(name, email, city, id) {
+  //   dispatch({ type: "EDIT", data: { name, city, email, id } });
+  //   throwAlert("EDIT");
+  // }
 
   /////////
 
@@ -101,7 +91,7 @@ export function DataTable({ data, throwAlert }) {
 
   return (
     <div className="w-full">
-      <div className="rounded-md border">
+      <div className="rounded-md border  ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -124,7 +114,7 @@ export function DataTable({ data, throwAlert }) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -148,7 +138,7 @@ export function DataTable({ data, throwAlert }) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-start space-x-2 py-4">
         <div className="space-x-2">
           <Button
             variant="outline"
