@@ -12,15 +12,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Controller, useForm } from "react-hook-form";
 
 const EditUser = ({ user, onEdit }) => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [city, setCity] = useState(user.address?.city);
 
-  function handleEdit() {
-    onEdit(name, email, city, user.id);
-  }
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+      city: user.address?.city,
+    },
+  });
+  const onSubmit = ({ name, email, city, userId }) => {
+    onEdit(name, email, city, userId);
+  };
 
   return (
     <div>
@@ -28,56 +37,100 @@ const EditUser = ({ user, onEdit }) => {
         <DialogTrigger asChild>
           <Button variant="outline">Edit</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className=" sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
             <DialogDescription>
               Make changes here. Click save when you done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4  items-center gap-4">
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="col-span-3"
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: true,
+                  minLength: 2,
+                  pattern: /(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/,
+                }}
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <>
+                    <Input
+                      className={`col-span-3  ${
+                        invalid ? "text-red-600   border-red-600 " : ""
+                      }`}
+                      onChange={onChange}
+                      value={value}
+                    />
+                  </>
+                )}
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4  items-center gap-4">
               <Label htmlFor="email" className="text-right">
                 Email
               </Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="col-span-3"
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: true,
+                  pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/,
+                }}
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <>
+                    <Input
+                      className={`col-span-3  ${
+                        invalid ? "text-red-600   border-red-600 " : ""
+                      }`}
+                      onChange={onChange}
+                      value={value}
+                    />
+                  </>
+                )}
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4  items-center gap-4">
               <Label htmlFor="city" className="text-right">
-                city
+                City
               </Label>
-              <Input
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="col-span-3"
+              <Controller
+                name="city"
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <>
+                    <Input
+                      className={`col-span-3  ${
+                        invalid ? "text-red-600   border-red-600 " : ""
+                      }`}
+                      onChange={onChange}
+                      value={value}
+                    />
+                  </>
+                )}
               />
             </div>
-          </div>
-          <DialogFooter>
-            <DialogTrigger asChild>
-              <Button type="submit" onClick={handleEdit}>
-                Save
-              </Button>
-            </DialogTrigger>
-          </DialogFooter>
+            <Button type="submit">Save</Button>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

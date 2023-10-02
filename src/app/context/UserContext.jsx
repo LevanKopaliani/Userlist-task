@@ -301,7 +301,7 @@ const UserContextProvider = ({ children }) => {
   function listReducer(users, action) {
     switch (action.type) {
       case "getData": {
-        return [...DummtData];
+        // return [...DummtData];
         /// Dummy Data delete Up
         return [...action.data];
       }
