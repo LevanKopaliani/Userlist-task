@@ -1,23 +1,13 @@
 "use client";
-import React, { Suspense, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { userActionDispatch, userContext } from "../context/UserContext";
 import UserListItem from "./UserListItem";
 
 // UI
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import Loading from "../loading";
-import { Button } from "@/components/ui/button";
-import { DataTable, DataTableDemo } from "./DataTable";
+
+import { DataTable } from "./DataTable";
 import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
+
 //
 const UserList = () => {
   const userList = useContext(userContext);
@@ -50,9 +40,10 @@ const UserList = () => {
         });
   }
   //
+
   return (
     <>
-      <Toaster />
+      {/* <Toaster duration={5000} /> */}
       <DataTable
         throwAlert={throwAlert}
         data={userList}

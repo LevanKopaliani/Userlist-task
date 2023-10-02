@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,10 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Controller, useForm } from "react-hook-form";
 
 const EditUser = ({ user, onEdit }) => {
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [city, setCity] = useState(user.address?.city);
-
   const { control, handleSubmit } = useForm({
     defaultValues: {
       userId: user.id,
