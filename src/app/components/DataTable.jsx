@@ -28,6 +28,7 @@ export function DataTable({ data, handleDelete, handleEdit }) {
     {
       accessorKey: "name",
       header: "Name",
+
       cell: ({ row }) => (
         <div className="capitalize">
           <Link href={{ pathname: `/user/${row.getValue("id")}` }}>
@@ -90,8 +91,8 @@ export function DataTable({ data, handleDelete, handleEdit }) {
   });
 
   return (
-    <div className="w-full">
-      <div className="rounded-md border  ">
+    <div className="w-full  ">
+      <div className="rounded-md border bg-slate-50 ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

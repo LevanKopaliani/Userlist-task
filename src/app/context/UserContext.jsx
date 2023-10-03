@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import React, {
   createContext,
@@ -295,17 +296,37 @@ const DummtData = [
 ///
 
 const UserContextProvider = ({ children }) => {
+  // ALERT
+  const { toast } = useToast();
   //   const [users, setUsers] = useState([]); 1
   const [users, dispatch] = useReducer(listReducer, []);
 
   function listReducer(users, action) {
+    // REQUEST IMITATIONS
     switch (action.type) {
       case "getData": {
-        // return [...DummtData];
+        // return [...DummtData], api users = 10, need dummy data to check pagination  ;
         /// Dummy Data delete Up
         return [...action.data];
       }
       case "DELETE": {
+        async function deleteUser() {
+          await axios
+            .delete(`https://jsonplaceholder.typicode.com/users/${action.id}`)
+            .then((res) => {
+              if (res.status == 200) {
+                toast({
+                  variant: "destructive",
+                  description: "User Deleted",
+                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        deleteUser();
+
         return [...users.filter((user) => user.id !== action.id)];
       }
       case "EDIT": {
@@ -317,9 +338,27 @@ const UserContextProvider = ({ children }) => {
           }
           return user;
         });
-        // console.log(updatedUsers);
+        async function updateUser() {
+          await axios
+            .patch(`https://jsonplaceholder.typicode.com/users/${action.id}`, {
+              name: action.data.name,
+              email: action.data.email,
+              address: { city: action.data.city },
+            })
+            .then((res) => {
+              if (res.status == 200) {
+                toast({
+                  description: "User Edited",
+                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        updateUser();
+
         return [...updatedUsers];
-        // return [...users, action.data];
       }
     }
   }

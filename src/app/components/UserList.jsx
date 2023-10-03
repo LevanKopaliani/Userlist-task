@@ -7,6 +7,7 @@ import UserListItem from "./UserListItem";
 
 import { DataTable } from "./DataTable";
 import { useToast } from "@/components/ui/use-toast";
+import { useRenderCount } from "@uidotdev/usehooks";
 
 //
 const UserList = () => {
@@ -20,11 +21,11 @@ const UserList = () => {
   // DELETE & EDIT
   function handleDelete(id) {
     dispatch({ type: "DELETE", id: id });
-    throwAlert("DELETE");
+    // throwAlert("DELETE");
   }
   function handleEdit(name, email, city, id) {
     dispatch({ type: "EDIT", data: { name, city, email, id } });
-    throwAlert("EDIT");
+    // throwAlert("EDIT");
   }
   //
 
