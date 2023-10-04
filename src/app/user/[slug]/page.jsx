@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import React, { useContext, useEffect, useState } from "react";
 
-const page = (props) => {
+const Page = (props) => {
   const router = useRouter();
   const params = useParams();
   const userList = useContext(userContext);
@@ -77,4 +77,4 @@ const page = (props) => {
   );
 };
 
-export default page;
+export default Page;
