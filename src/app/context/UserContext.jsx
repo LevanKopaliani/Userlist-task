@@ -1,20 +1,15 @@
 "use client";
 
 import { useToast } from "@/components/ui/use-toast";
+import { data } from "autoprefixer";
 import axios from "axios";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 
 export const userContext = createContext(null);
 export const userActionDispatch = createContext(null);
 
 /// Dummy Data
-const DummtData = [
+const DummyData = [
   {
     id: 1,
     name: "Leanne Graham",
@@ -298,15 +293,17 @@ const DummtData = [
 const UserContextProvider = ({ children }) => {
   // ALERT
   const { toast } = useToast();
-  //   const [users, setUsers] = useState([]); 1
+  //
   const [users, dispatch] = useReducer(listReducer, []);
 
   function listReducer(users, action) {
     // REQUEST IMITATIONS
     switch (action.type) {
+      case "SETDUMMY": {
+        return DummyData;
+        //api users = 10, need dummy data to check pagination  ;
+      }
       case "getData": {
-        // return [...DummtData], api users = 10, need dummy data to check pagination  ;
-        /// Dummy Data delete Up
         return [...action.data];
       }
       case "DELETE": {
@@ -340,11 +337,15 @@ const UserContextProvider = ({ children }) => {
         });
         async function updateUser() {
           await axios
-            .patch(`https://jsonplaceholder.typicode.com/users/${action.id}`, {
-              name: action.data.name,
-              email: action.data.email,
-              address: { city: action.data.city },
-            })
+            .patch(
+              `https://jsonplaceholder.typicode.com/users/${action.data.id}`,
+              {
+                name: action.data.name,
+                email: action.data.email,
+                /// need to check address
+                address: { city: action.data.city },
+              }
+            )
             .then((res) => {
               if (res.status == 200) {
                 toast({
@@ -362,17 +363,16 @@ const UserContextProvider = ({ children }) => {
       }
     }
   }
-
   useEffect(() => {
     getData();
   }, []);
 
-  const getData = async () => {
+  async function getData() {
     const { data } = await axios.get(
       `https://jsonplaceholder.typicode.com/users`
     );
     dispatch({ type: "getData", data });
-  };
+  }
 
   return (
     <userContext.Provider value={users}>

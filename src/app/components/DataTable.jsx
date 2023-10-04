@@ -48,7 +48,7 @@ export function DataTable({ data, handleDelete, handleEdit }) {
       accessorKey: "city",
       header: "City",
       cell: ({ row }) => (
-        <div className="capitalize">{row.original.address.city}</div>
+        <div className="capitalize">{row.original.address?.city}</div>
       ),
     },
 
@@ -56,8 +56,6 @@ export function DataTable({ data, handleDelete, handleEdit }) {
       accessorKey: "id",
       header: "Actions",
       cell: ({ row }) => {
-        // const delId = row.getValue("id");
-
         return (
           <div className="flex gap-2 font-medium">
             <EditUser user={row.original} onEdit={handleEdit} />
@@ -67,20 +65,6 @@ export function DataTable({ data, handleDelete, handleEdit }) {
       },
     },
   ];
-  //
-
-  ////////////////
-
-  // function handleDelete(rowId) {
-  //   dispatch({ type: "DELETE", id: rowId });
-  //   throwAlert("DELETE");
-  // }
-  // function handleEdit(name, email, city, id) {
-  //   dispatch({ type: "EDIT", data: { name, city, email, id } });
-  //   throwAlert("EDIT");
-  // }
-
-  /////////
 
   const table = useReactTable({
     data,

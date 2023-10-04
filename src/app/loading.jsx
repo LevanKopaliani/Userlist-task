@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 const Loading = () => {
@@ -10,7 +11,7 @@ const Loading = () => {
       justify-center
       p-10 "
     >
-      Loading ...{" "}
+      <p className="  text-slate-600 text-2xl">Loading ... </p>
     </div>
   );
 };
